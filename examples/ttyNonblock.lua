@@ -1,6 +1,9 @@
 --[[ Precise Shadowcasting ]]--
 local ROT=require 'src.rot'
 
+local rng=ROT.RNG.Twister:new()
+rng:randomseed(os.time())
+    
 function calbak(x, y, val)
     map[x..','..y]=val
 end
@@ -23,8 +26,6 @@ end
 function placePlayer()
     local key =nil
     local char='#'
-    local rng=ROT.RNG.Twister:new()
-    rng:randomseed()
     while true do
         key=rng:random(1,f:getWidth())..','..rng:random(1,f:getHeight())
         if map[key]==0 then
@@ -55,7 +56,7 @@ function love.load()
 end
 
 function doTheThing()
-    uni=ROT.Map.EllerMaze:new(256, 256)
+    uni=ROT.Map.Brogue:new(128, 128, {}, rng)
     uni:create(calbak)
     fov=ROT.FOV.Precise:new(lightCalbak)--, {topology=4})
     placePlayer()
@@ -80,6 +81,7 @@ function love.update()
                 char=key==player.x..','..player.y and '@'
                     or map[key]==0 and '.'
                     or map[key]==1 and '#'
+                    or '?'
                 f:write(char,
                     x - player.x + radX + 1,
                     y - player.y + radY + 2,
@@ -112,7 +114,7 @@ function love.keypressed(key)
     if newPos then
         local newx = player.x+newPos[1]
         local newy = player.y+newPos[2]
-        if map[newx..','..newy]==0 then
+        if map[newx..','..newy]~=1 then
             field={}
             player.x=newx
             player.y=newy
