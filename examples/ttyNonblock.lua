@@ -1,7 +1,7 @@
 --[[ Precise Shadowcasting ]]--
 local ROT=require 'src.rot'
 
-local rng=ROT.RNG.Twister:new()
+local rng=ROT.RNG
 rng:randomseed(os.time())
     
 function calbak(x, y, val)
@@ -47,16 +47,16 @@ function love.load()
     map={}
     field={}
     seen={}
-    seenColor={r=100, g=100, b=100, a=255}
-    fieldColor={r=225, g=225, b=125, a=255}
-    fieldbg={r=50, g=50, b=50, a=255}
+    seenColor={ 100, 100, 100 }
+    fieldColor={ 225, 225, 125 }
+    fieldbg={ 50, 50, 50 }
     update=false
     player={x=1, y=1}
     doTheThing()
 end
 
 function doTheThing()
-    uni=ROT.Map.Brogue:new(128, 128, {}, rng)
+    uni=ROT.Map.EllerMaze:new(128, 128, {}, rng)
     uni:create(calbak)
     fov=ROT.FOV.Precise:new(lightCalbak)--, {topology=4})
     placePlayer()
