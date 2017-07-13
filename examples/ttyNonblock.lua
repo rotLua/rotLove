@@ -1,9 +1,6 @@
 --[[ Precise Shadowcasting ]]--
 local ROT=require 'src.rot'
 
-local rng=ROT.RNG
-rng:randomseed(os.time())
-    
 function calbak(x, y, val)
     map[x..','..y]=val
 end
@@ -56,7 +53,7 @@ function love.load()
 end
 
 function doTheThing()
-    uni=ROT.Map.EllerMaze:new(128, 128, {}, rng)
+    uni=ROT.Map.EllerMaze:new(256, 256)
     uni:create(calbak)
     fov=ROT.FOV.Precise:new(lightCalbak)--, {topology=4})
     placePlayer()

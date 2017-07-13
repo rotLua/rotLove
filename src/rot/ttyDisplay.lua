@@ -34,8 +34,8 @@ end
 function TTYDisplay:write(text, x, y, fg, bg)
     self.lines[y] = self.lines[y] or {}
     self.lines[y][x] =
-        (fg and ('\27[38;2;%i;%i;%im'):format(fg[1], fg[2], fg[3]) or '') .. 
-        (bg and ('\27[48;2;%i;%i;%im'):format(bg[1], bg[2], bg[3]) or '')
+        (fg and ('\27[38;2;%i;%i;%im'):format(fg.r, fg.g, fg.b) or '') .. 
+        (bg and ('\27[48;2;%i;%i;%im'):format(bg.r, bg.g, bg.b) or '')
     for i = 1, #text do
         self.lines[y][x] = (self.lines[y][x] or '') .. text:sub(i, i)
         x = x + 1
